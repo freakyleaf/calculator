@@ -16,22 +16,22 @@ document.addEventListener('DOMContentLoaded', () => {
         operator: '',
     };
 
-    let calculator = { ...calculatorDefaultValues }; // Clone object for a new session
+    let c = { ...calculatorDefaultValues }; // Clone object for a new session
 
     function updateDisplayOutputValueText() {
-        if (calculator.isFirstNumber) {
-            displayOutputText.textContent = calculator.numberFirst;
+        if (c.isFirstNumber) {
+            displayOutputText.textContent = c.numberFirst;
         } else {
-            displayOutputText.textContent = calculator.numberSecond;
+            displayOutputText.textContent = c.numberSecond;
         }
     }
 
     function updateDisplaySumValueText() {
-        displaySumText.textContent = calculator.numberFirst + calculator.operator + (calculator.numberSecond === '0' ? '' : ` ${calculator.numberSecond}`);
+        displaySumText.textContent = c.numberFirst + c.operator + (c.numberSecond === '0' ? '' : ` ${c.numberSecond}`);
     }
 
     function resetAllValues() {
-        calculator = { ...calculatorDefaultValues }; // Clone object for a new session
+        c = { ...calculatorDefaultValues }; // Clone object for a new session
         updateDisplayOutputValueText();
         updateDisplaySumValueText();
     }
@@ -44,35 +44,57 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleNumberButtonClick(newNumber) {
-        if (calculator.isFirstNumber) {
-            calculator.numberFirst = generateNumber(calculator.numberFirst, newNumber);
+        if (c.isFirstNumber) {
+            c.numberFirst = generateNumber(c.numberFirst, newNumber);
             updateDisplayOutputValueText();
             updateDisplaySumValueText();
         } else {
-            calculator.numberSecond = generateNumber(calculator.numberSecond, newNumber);
+            c.numberSecond = generateNumber(c.numberSecond, newNumber);
             updateDisplayOutputValueText();
             updateDisplaySumValueText();
         }
     }
 
+    function calculateSum() {
+        if (c.operator === ' ÷') {
+            displayOutputText.textContent = parseFloat(c.numberFirst) / parseFloat(c.numberSecond);
+        }
+
+        if (c.operator === ' ×') {
+            displayOutputText.textContent = parseFloat(c.numberFirst) * parseFloat(c.numberSecond);
+        }
+
+        if (c.operator === ' -') {
+            displayOutputText.textContent = parseFloat(c.numberFirst) - parseFloat(c.numberSecond);
+        }
+
+        if (c.operator === ' +') {
+            displayOutputText.textContent = parseFloat(c.numberFirst) + parseFloat(c.numberSecond);
+        }
+    }
+
     function handleOperatorButtonClick(operator) {
         // As the user has clicked an operator button we're no longer dealing with the first number
-        calculator.isFirstNumber = false;
+        c.isFirstNumber = false;
 
         if (operator === 'divide') {
-            calculator.operator = ' ÷';
+            c.operator = ' ÷';
         }
 
         if (operator === 'multiply') {
-            calculator.operator = ' ×';
+            c.operator = ' ×';
         }
 
         if (operator === 'subtract') {
-            calculator.operator = ' -';
+            c.operator = ' -';
         }
 
         if (operator === 'add') {
-            calculator.operator = ' +';
+            c.operator = ' +';
+        }
+
+        if (operator === 'equals') {
+            calculateSum();
         }
         updateDisplaySumValueText();
     }
