@@ -56,6 +56,10 @@
 
     .button {
         flex-basis: 33.33333333%;
+
+        &:nth-last-child(-n+3) { // Last 3 items
+            border-bottom: none;
+        }
     }
 }
 
@@ -68,5 +72,9 @@
 
     .button {
         width: 100%;
+
+        &:last-child {
+            border-bottom: none;
+        }
     }
 }
