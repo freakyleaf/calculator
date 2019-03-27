@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
         isFirstNumber: true,
         numberFirst: '0',
         numberSecond: '0',
-        numberSecondDecimalPointUsed: false,
         operator: '',
     };
 
@@ -28,7 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateDisplaySumValueText() {
-        displaySumText.textContent = c.numberFirst + c.operator + (c.numberSecond === '0' ? '' : ` ${c.numberSecond}`);
+        c.displaySumValue = c.numberFirst + c.operator + (c.numberSecond === '0' ? '' : ` ${c.numberSecond}`);
+        displaySumText.textContent = c.displaySumValue;
     }
 
     function resetAllValues() {
@@ -67,20 +67,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function calculateSum() {
         if (c.operator === ' ÷') {
-            displayOutputText.textContent = parseFloat(c.numberFirst) / parseFloat(c.numberSecond);
+            c.displayOutputValue = parseFloat(c.numberFirst) / parseFloat(c.numberSecond);
         }
 
         if (c.operator === ' ×') {
-            displayOutputText.textContent = parseFloat(c.numberFirst) * parseFloat(c.numberSecond);
+            c.displayOutputValue = parseFloat(c.numberFirst) * parseFloat(c.numberSecond);
         }
 
         if (c.operator === ' -') {
-            displayOutputText.textContent = parseFloat(c.numberFirst) - parseFloat(c.numberSecond);
+            c.displayOutputValue = parseFloat(c.numberFirst) - parseFloat(c.numberSecond);
         }
 
         if (c.operator === ' +') {
-            displayOutputText.textContent = parseFloat(c.numberFirst) + parseFloat(c.numberSecond);
+            c.displayOutputValue = parseFloat(c.numberFirst) + parseFloat(c.numberSecond);
         }
+
+        displayOutputText.textContent = c.displayOutputValue;
     }
 
     function handleOperatorButtonClick(operator) {
@@ -113,6 +115,15 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDisplaySumValueText();
     }
 
+    function postSum() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://localhost:3000/post/', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+            value: `${c.displaySumValue} = ${c.displayOutputValue}`,
+        }));
+    }
+
     // Set up click handlers
     buttonsDiv.addEventListener('click', (event) => {
         const { target } = event;
@@ -123,6 +134,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (target.dataset.function) {
                 if (target.dataset.function === 'all-clear') {
                     resetAllValues();
+                }
+                if (target.dataset.function === 'save') {
+                    postSum();
                 }
             }
 
