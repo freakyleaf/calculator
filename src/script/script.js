@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         isFirstNumber: true,
         numberFirst: '0',
         numberSecond: '0',
+        numberSecondDecimalPointUsed: false,
         operator: '',
     };
 
@@ -36,20 +37,38 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDisplaySumValueText();
     }
 
-    function generateNumber(numberType, newNumber) {
+    function generateNumberStr(numberType, newNumber) {
+        if (newNumber === '.') {
+            if (numberType.includes('.')) {
+                return numberType;
+            }
+            if (numberType === '0') {
+                return '0.';
+            }
+            return numberType + newNumber;
+        }
         if (numberType === '0') {
             return newNumber === '0' ? '0' : newNumber;
         }
         return numberType + newNumber;
     }
 
+    function isDecimalPointUsed(newNumber) {
+        if (newNumber === '.') {
+            return true;
+        }
+        return false;
+    }
+
     function handleNumberButtonClick(newNumber) {
         if (c.isFirstNumber) {
-            c.numberFirst = generateNumber(c.numberFirst, newNumber);
+            c.numberFirst = generateNumberStr(c.numberFirst, newNumber);
+            c.numberFirst.decimalPointUsed = isDecimalPointUsed(newNumber);
             updateDisplayOutputValueText();
             updateDisplaySumValueText();
         } else {
-            c.numberSecond = generateNumber(c.numberSecond, newNumber);
+            c.numberSecond = generateNumberStr(c.numberSecond, newNumber);
+            c.numberSecond.decimalPointUsed = isDecimalPointUsed(newNumber);
             updateDisplayOutputValueText();
             updateDisplaySumValueText();
         }
@@ -74,6 +93,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleOperatorButtonClick(operator) {
+        // No point continuing if first number is 0
+        if (c.numberFirst === '0') {
+            return;
+        }
         // As the user has clicked an operator button we're no longer dealing with the first number
         c.isFirstNumber = false;
 
