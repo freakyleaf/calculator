@@ -1,0 +1,90 @@
+////
+/// @group component.button
+/// @since 0.0.1
+////
+
+/// 1. Declared here as browser defaults to system sans-serif
+/// 2. Remove `background-image` default on Firefox
+
+%button {
+    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    /* stylelint-disable property-no-vendor-prefix */
+    -ms-touch-action: manipulation;
+    /* stylelint-enable */
+    touch-action: manipulation;
+    @extend %user-select-none;
+    vertical-align: middle;
+    height: 3em;
+    padding: 0;
+    font-family: $global-font-family; // 1
+    font-size: 100%;
+    font-weight: 300;
+    @extend %smooth-font-rendering;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    background: none; // 2
+    border-style: solid;
+    border-width: 0;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba($black, 0.15);
+}
+
+%button--function {
+    color: $white;
+    background-color: $primary;
+
+    &:not([disabled]) {
+
+        &:focus,
+        &:hover {
+            color: $white;
+            background-color: lighten($primary, 10%);
+        }
+    }
+
+}
+
+%button--number {
+    color: $white;
+    background-color: $secondary;
+
+    &:not([disabled]) {
+        &:focus,
+        &:hover {
+            color: $white;
+            background-color: lighten($secondary, 10%);
+        }
+    }
+}
+
+%button--operator {
+    color: $white;
+    background-color: $tertiary;
+
+    &:not([disabled]) {
+        &:focus,
+        &:hover {
+            color: $white;
+            background-color: lighten($tertiary, 10%);
+        }
+    }
+}
+
+.buttons__function .button {
+    @extend %button;
+    @extend %button--function;
+}
+
+.buttons__number .button {
+    @extend %button;
+    @extend %button--number;
+}
+
+.buttons__operator .button {
+    @extend %button;
+    @extend %button--operator;
+}

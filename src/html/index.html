@@ -2,16 +2,52 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>Calculator</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/style/style.css">
+    <meta charset="utf-8">
+    <title>Calculator</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style/style.css">
 </head>
 
 <body>
-  <p>Hello world! This is HTML5 Boilerplate.</p>
-  <script src="/script/script.js"></script>
+    <div class="calc">
+        <div class="display">
+            <div class="display__sum">
+                <span class="display__sum-text">365 x 4 =</span>
+            </div>
+            <div class="display__output">
+                <span class="display__output-text">1,460</span>
+            </div>
+        </div>
+        <div class="buttons">
+            <div class="buttons__function">
+                <button class="button">AC</button>
+                <button class="button">SAVE</button>
+            </div>
+            <div class="buttons__number">
+                <button class="button">.</button>
+                <button class="button">0</button>
+                <button class="button" disabled></button>
+                <button class="button">1</button>
+                <button class="button">2</button>
+                <button class="button">3</button>
+                <button class="button">4</button>
+                <button class="button">5</button>
+                <button class="button">6</button>
+                <button class="button">7</button>
+                <button class="button">8</button>
+                <button class="button">9</button>
+            </div>
+            <div class="buttons__operator">
+                <button class="button">÷</button>
+                <button class="button">×</button>
+                <button class="button">-</button>
+                <button class="button">+</button>
+                <button class="button">=</button>
+            </div>
+        </div>
+    </div>
+    <script src="/script/script.js"></script>
 </body>
 
 </html>
