@@ -74,7 +74,8 @@ html [type = 'button'], // 1
 }
 
 /// 1. `all` keyword used so not to overwrite any previously declared `transition-property` rule value (such as button background color)
-/// 2. Experimental! Makes for better `box-shadow` focus state presentation
+/// 2. Required for correct `z-index` positioning
+/// 3. Experimental! Makes for better `box-shadow` focus state presentation
 
 %focusable {
     box-shadow: 0 0 0 0 rgba(blue, 0);
@@ -82,7 +83,8 @@ html [type = 'button'], // 1
     transition: all ease-in-out 0.35s; // 1
 
     &:focus {
-        z-index: 10; // 2
+        position: relative; // 2
+        z-index: 10; // 3
         box-shadow: 0 0 0 0.5em rgba(blue, 0.35);
     }
 }

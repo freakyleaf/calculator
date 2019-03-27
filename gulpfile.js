@@ -10,7 +10,7 @@ const plumber          = require('gulp-plumber');
 const rename           = require('gulp-rename');
 const sass             = require('gulp-sass');
 const sourcemaps       = require('gulp-sourcemaps');
-const uglify           = require('gulp-uglify');
+const terser           = require('gulp-terser');
 
 // Better error reporting
 require('pretty-error').start();
@@ -19,25 +19,25 @@ require('pretty-error').start();
 const settings = {
     _file: {
         dest: {
-            style: 'style.css'
+            style: 'style.css',
         },
         src: {
-            style: 'style.scss'
-        }
+            style: 'style.scss',
+        },
     },
     _path: {
         dest: {
             html: '/',
             root: path.join(__dirname, 'dist'),
             script: 'script',
-            style: 'style'
+            style: 'style',
         },
         src: {
             html: 'html',
             root: path.join(__dirname, 'src'),
             script: 'script',
-            style: 'style'
-        }
+            style: 'style',
+        },
     },
     _plugin: {
         browsersync: {
@@ -68,9 +68,9 @@ const settings = {
         },
         sass: {
             precision: 8,
-        }
-    }
-}
+        },
+    },
+};
 
 const { _file, _path, _plugin } = settings;
 
@@ -94,7 +94,7 @@ gulp.task('script', () => {
         .pipe(lintscript())
         .pipe(lintscript.format())
         .pipe(sourcemaps.init())
-        .pipe(uglify())
+        .pipe(terser())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(path.join(_path.dest.root, _path.dest.script)));
 });
