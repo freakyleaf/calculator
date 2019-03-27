@@ -53,22 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return numberType + newNumber;
     }
 
-    function isDecimalPointUsed(newNumber) {
-        if (newNumber === '.') {
-            return true;
-        }
-        return false;
-    }
-
     function handleNumberButtonClick(newNumber) {
         if (c.isFirstNumber) {
             c.numberFirst = generateNumberStr(c.numberFirst, newNumber);
-            c.numberFirst.decimalPointUsed = isDecimalPointUsed(newNumber);
             updateDisplayOutputValueText();
             updateDisplaySumValueText();
         } else {
             c.numberSecond = generateNumberStr(c.numberSecond, newNumber);
-            c.numberSecond.decimalPointUsed = isDecimalPointUsed(newNumber);
             updateDisplayOutputValueText();
             updateDisplaySumValueText();
         }
